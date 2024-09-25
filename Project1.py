@@ -25,7 +25,8 @@ for prompt in prompts[:3]: #shows only the first 3 prompts
 	    stream=True,
 ):
         #this is what gets the responses from phi-3
-        response_content = message.choices[0].delta.get("content", "")
+        #this gets the message from Phi-3, takes the first choice, delta increments in stages, and finally puts in into content
+        response_content = message.choices[0].delta.get("content", "") 
         if response_content:
             responses.append(response_content)
         #this was an optional print statement to make sure I was getting the correct output    
