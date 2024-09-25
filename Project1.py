@@ -1,3 +1,5 @@
+#Drew Milton
+
 #using hugging face connects to AI using API
 from huggingface_hub import InferenceClient
 
@@ -6,7 +8,7 @@ from huggingface_hub import InferenceClient
 with open("prompts.txt", "r") as file: #with open, opens prompts.txt and r means to read in the prompts
     prompts = file.readlines() #file.readlines reads the prompts in the file and stores it in prompts
 
-#calls Phi-3 with a token
+#calls Phi-3 with a inference API and needs a token
 #got this from hugging face
 client = InferenceClient(
     "microsoft/Phi-3-mini-4k-instruct",
@@ -17,7 +19,7 @@ client = InferenceClient(
 responses = [] #stores responses into a list
 for prompt in prompts[:3]: #shows only the first 3 prompts
 
-    for message in client.chat_completion(
+    for message in client.chat_completion(  #sends the prompts to phi-3 and tells it the role is user and the max tokens = 100
 	    messages=[{"role": "user", "content": prompt}],
 	    max_tokens=100, 
 	    stream=True,
@@ -26,7 +28,8 @@ for prompt in prompts[:3]: #shows only the first 3 prompts
         response_content = message.choices[0].delta.get("content", "")
         if response_content:
             responses.append(response_content)
-        #print(message.choices[0].delta.content, end="") #optional print statement to make sure code was working
+        #this was an optional print statement to make sure I was getting the correct output    
+        #print(message.choices[0].delta.content, end="")
 
 
 
