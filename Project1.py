@@ -12,7 +12,7 @@ with open("prompts.txt", "r") as file: #with open, opens prompts.txt and r means
 #got this from hugging face
 client = InferenceClient(
     "microsoft/Phi-3-mini-4k-instruct",
-    token="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",
+    token="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",
 )
 
 #gets the responses and outputs them in the terminal
