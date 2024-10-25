@@ -16,11 +16,11 @@ urls = [url.strip() for url in urls]
 
 #Header that makes it look like a browser
 headers = {
-    'User-Agent': 'Mozilla/5.0 '
+    'User-Agent': 'Mozilla/5.0'
 }
 
 
-#For loop to go through each url and gives them a starting index of 1 to enumerate from
+#For loop to go through each url and gives them a starting i of 1 to enumerate from
 for i, url in enumerate(urls, start=1):
     print(f"Scraping URL {i}: {url}")
 
@@ -41,8 +41,8 @@ for i, url in enumerate(urls, start=1):
                 review_text = review.get_text(strip=True)
                 reviews.append(f"{review_text}\n\n")
 
-            #Created a review_{index}.txt file to write the reviews to
-            with open(f'review_{index}.txt', 'w', encoding='utf-8') as file:
+            #Created a review_{i}.txt file to write the reviews to
+            with open(f'review_{i}.txt', 'w', encoding='utf-8') as file:
                 file.writelines(reviews)
 
             #Optional Print statements to make sure the scraping is complete
