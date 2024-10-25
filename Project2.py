@@ -33,7 +33,7 @@ for i, url in enumerate(urls, start=1):
 
         #Sets an empty reviews array then finds all the reviews using beautiful soup
         reviews = []
-        review_elements = soup.find_all('p', class_='pre-white-space')
+        review_elements = soup.find_all('p', class_ = 'pre-white-space')
 
         #If statement to check if there is a review then append it to reviews array
         if review_elements:
