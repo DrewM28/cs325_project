@@ -19,8 +19,8 @@ headers = {
 
 
 # Loop through each URL in the URL.txt file
-for index, url in enumerate(urls, start=1):
-    print(f"Scraping URL {index}: {url}")
+for i, url in enumerate(urls, start=1):
+    print(f"Scraping URL {i}: {url}")
 
     # Send a request to the URL
     response = requests.get(url, headers=headers, timeout=30)
@@ -43,9 +43,9 @@ for index, url in enumerate(urls, start=1):
             with open(f'review_{index}.txt', 'w', encoding='utf-8') as file:
                 file.writelines(reviews)
 
-            print(f"Scraping complete. Comments saved to review_{index}.txt")
+            print(f"Scraping complete. Comments saved to review_{i}.txt")
         else:
-            print(f"No reviews found for URL {index}: {url}")
+            print(f"No reviews found for URL {i}: {url}")
     else:
-        print(f"Failed to retrieve URL {index}. Status code: {response.status_code}")
+        print(f"Failed to retrieve URL {i}. Status code: {response.status_code}")
 
