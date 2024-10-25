@@ -21,7 +21,7 @@ headers = {
 
 
 #For loop to go through each url and gives them a starting i of 1 to enumerate from
-for i, url in enumerate(urls, start=1):
+for i, url in enumerate(urls, start = 1):
     print(f"Scraping URL {i}: {url}")
 
     #Opens up the URL
