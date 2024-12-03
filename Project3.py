@@ -4,6 +4,7 @@ import os
 from huggingface_hub import InferenceClient
 from collections import Counter
 import matplotlib.pyplot as plt
+import numpy as np
 
 class HuggingFaceChat:
     def __init__(self, model_name, token=None):
@@ -99,7 +100,7 @@ class HuggingFaceChat:
             self.save_responses(prompts, responses, output_file)
 
 
-def plot_sentiment_distribution(sentiments, output_path=None):
+def plot_sentiment_distribution(device_sentiments, output_path=None):
     """
     Create a bar graph showing the distribution of sentiments.
 
@@ -107,29 +108,43 @@ def plot_sentiment_distribution(sentiments, output_path=None):
         sentiments (list): A list of sentiment labels (e.g., "positive", "negative", "neutral").
         output_path (str, optional): Path to save the plot. If None, the plot is displayed.
     """
-    # Count the number of each sentiment
-    sentiment_counts = Counter(sentiments)
-    labels = ["Device 1", "Device 2", "Device 3", "Device 4"]  # Ensure consistent order
-    counts = [sentiment_counts.get(label, 0) for label in labels]
+    #Categories
+    categories = ["positive", "negative", "neutral"]
 
-    # Create the bar chart
-    plt.figure(figsize=(8, 5))
-    plt.bar(labels, counts, color=['green', 'red', 'blue'], alpha=0.7)
-    plt.title("Sentiment Distribution", fontsize=16)
-    plt.xlabel("Sentiment", fontsize=14)
-    plt.ylabel("Count", fontsize=14)
-    plt.xticks(fontsize=12)
-    plt.yticks(fontsize=12)
+    #Get data ready to plot
+    device_labels = list(device_sentiments.keys())
+    sentiment_count = [
+        [Counter(device_sentiments[device]).get(category, 0) for category in categories]
+        for device in device_labels
+    ]
 
-    # Add percentage labels on the bars
-    for i, count in enumerate(counts):
-        percentage = (count / sum(counts)) * 100
-        plt.text(i, count + 0.2, f"{percentage:.1f}%", ha='center', fontsize=12)
+    #Bar position
+    x = np.arange(len(categories))
+    bar_width = 0.2
 
-    # Save the plot to a file or display it
+    #Plot the data
+    plt.figure(figsize = (10, 6))
+    for i, counts in enumerate(sentiment_count):
+        plt.bar(
+            x + i * bar_width,
+            counts,
+            width = bar_width, 
+            label = device_labels[i],
+            alpha = 0.7,
+        )
+
+    #configure the plot
+    plt.title("Sentiment Distribution by Device", fontsize = 16)
+    plt.xlabel("Sentiments", fontsize = 14)
+    plt.ylabel("Count", fontsize = 14)
+    plt.xticks(x + bar_width * (len(device_labels) - 1) / 2, categories, fontsize = 12)
+    plt.legend(fontsize = 12)
+    plt.grid(axis = "y", linestyle = "--", alpha = 0.7)
+
+    #Save or display the graph
     if output_path:
-        plt.savefig(output_path, format='png')
-        print(f"Bar graph saved to {output_path}")
+        plt.savefig(output_path, format = "png")
+        print(f"Grouped bar graph saved to {output_path}")
     else:
         plt.show()
 
@@ -146,9 +161,13 @@ if __name__ == "__main__":
     # Process files
     chat_bot.process_multiple_files(input_files, output_files, max_tokens=100)
 
-        # Example sentiments
-    sentiments = ["positive", "negative", "neutral", "positive", "positive", "neutral", "negative"]
+    #Device names
+    device_sentiments = {
+        "Device 1": ["positive"],
+        "Device 2": ["negative"],
+        "Device 3": ["neutral"],
+        "Device 4": ["positive"]
+    }
 
-    # Display the sentiment distribution
-    plot_sentiment_distribution(sentiments)
-
+    #Function call to plot data
+    plot_sentiment_distribution(device_sentiments, output_path="test_graph.png")

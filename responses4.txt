@@ -1,6 +1,6 @@
 Response to Prompt 1:
 I recently purchased the Apple Watch SE 2nd Generation (GPS) 44mm in Midnight, and I couldn’t be happier with my choice. The 44mm screen size is perfect, providing a clear and spacious display without feeling bulky on my wrist. The Midnight Aluminum Case with the matching sport band looks sleek and modern, suitable for both casual and professional settings.
-positive
+neutral
 
 Response to Prompt 2:
 Performance-wise, it handles all my everyday tasks smoothly, from tracking workouts and receiving notifications to setting reminders. The battery life has been solid, typically lasting a full day with moderate use, which includes workouts and notifications.
@@ -60,7 +60,7 @@ positive
 
 Response to Prompt 16:
 The silicone band is easy enough to clean but a little bit uncomfortable where the fabric bands are more comfortable but take more effort to clean, and I haven’t had any durability issues
-neutral
+positive
 
 Response to Prompt 17:
 I really like this watch. I used to have the Series 6, and was thinking about upgrading to a 9, but chose the SE instead for the cheaper price. Works the same way and I thibk i like the SE better.
