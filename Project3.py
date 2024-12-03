@@ -2,6 +2,8 @@
 
 import os
 from huggingface_hub import InferenceClient
+from collections import Counter
+import matplotlib.pyplot as plt
 
 class HuggingFaceChat:
     def __init__(self, model_name, token=None):
@@ -19,30 +21,33 @@ class HuggingFaceChat:
         Read prompts from a file.
         """
         try:
-            with open(file_path, "r") as file:
-                self.prompts = file.readlines()
+            with open(file_path, "r", encoding = "utf-8", errors="ignore") as file:
+                return file.readlines()
         except FileNotFoundError:
             print(f"Error: {file_path} not found.")
-            self.prompts = []
+            return []
         except Exception as e:
-            print(f"Unexpected error reading prompts: {e}")
-            self.prompts = []
+            print(f"Unexpected error reading {file_path}: {e}")
+            return []
 
-    def generate_responses(self, max_tokens=100, prompt_limit=10):
+    def generate_responses(self, prompts, max_tokens=100):
         """
-        Generate responses for the prompts using the Hugging Face model.
+        Generate responses for the prompts using the Hugging Face model,
+        ensuring the output is classified as positive, negative, or neutral.
         """
-        if not hasattr(self, "prompts") or not self.prompts:
+        if not prompts:
             print("No prompts available to process.")
             return []
 
         responses = []
         instruction = (
-            "Analyze the following text and respond with 'positive', 'negative', or 'neutral' sentiment only: \n\n"
+            "Analyze the following text and respond with 'positive', 'negative', or 'neutral' sentiment only:\n\n"
         )
-        for prompt in self.prompts[:prompt_limit]:
+
+        for prompt in prompts:
             response_text = ""
             try:
+                # Add the instruction to the prompt
                 formatted_prompt = instruction + prompt.strip()
                 for message in self.client.chat_completion(
                     messages=[{"role": "user", "content": formatted_prompt}],
@@ -52,47 +57,98 @@ class HuggingFaceChat:
                     response_content = message.choices[0].delta.get("content", "")
                     if response_content:
                         response_text += response_content
+
+                # Post-process to ensure the output is valid
                 response_text = response_text.strip().lower()
                 if response_text not in ["positive", "negative", "neutral"]:
-                    response_text = "neutral" #defaults the response to neutral if the response is invalid
+                    response_text = "neutral"  # Default to neutral if the response is invalid
 
             except Exception as e:
                 print(f"Error processing prompt: {prompt.strip()} - {e}")
-                continue
+                response_text = "neutral"  # Default to neutral on error
 
             responses.append(response_text)
-        self.responses = responses
         return responses
 
-    def save_responses(self, output_path):
+    def save_responses(self, prompts, responses, output_path):
         """
         Save the generated responses to a file.
         """
-        if not hasattr(self, "responses") or not self.responses:
-            print("No responses available to save.")
-            return
-
         try:
-            with open(output_path, "w") as file:
-                for i, (prompt, response) in enumerate(zip(self.prompts, self.responses), start=1):
+            with open(output_path, "w", encoding="utf-8", errors="ignore") as file:
+                for i, (prompt, response) in enumerate(zip(prompts, responses), start=1):
                     file.write(f"Response to Prompt {i}:\n")
                     file.write(f"{prompt.strip()}\n")
                     file.write(f"{response}\n\n")
             print(f"Responses saved to {output_path}")
         except Exception as e:
-            print(f"Error saving responses: {e}")
+            print(f"Error saving responses to {output_path}: {e}")
 
-# Example usage
+    def process_multiple_files(self, input_files, output_files, max_tokens=100):
+        """
+        Process multiple input files and save responses to corresponding output files.
+        """
+        if len(input_files) != len(output_files):
+            print("Error: Number of input files must match number of output files.")
+            return
+
+        for input_file, output_file in zip(input_files, output_files):
+            print(f"Processing {input_file} -> {output_file}")
+            prompts = self.read_prompts(input_file)
+            responses = self.generate_responses(prompts, max_tokens=max_tokens)
+            self.save_responses(prompts, responses, output_file)
+
+
+def plot_sentiment_distribution(sentiments, output_path=None):
+    """
+    Create a bar graph showing the distribution of sentiments.
+
+    Args:
+        sentiments (list): A list of sentiment labels (e.g., "positive", "negative", "neutral").
+        output_path (str, optional): Path to save the plot. If None, the plot is displayed.
+    """
+    # Count the number of each sentiment
+    sentiment_counts = Counter(sentiments)
+    labels = ["Device 1", "Device 2", "Device 3", "Device 4"]  # Ensure consistent order
+    counts = [sentiment_counts.get(label, 0) for label in labels]
+
+    # Create the bar chart
+    plt.figure(figsize=(8, 5))
+    plt.bar(labels, counts, color=['green', 'red', 'blue'], alpha=0.7)
+    plt.title("Sentiment Distribution", fontsize=16)
+    plt.xlabel("Sentiment", fontsize=14)
+    plt.ylabel("Count", fontsize=14)
+    plt.xticks(fontsize=12)
+    plt.yticks(fontsize=12)
+
+    # Add percentage labels on the bars
+    for i, count in enumerate(counts):
+        percentage = (count / sum(counts)) * 100
+        plt.text(i, count + 0.2, f"{percentage:.1f}%", ha='center', fontsize=12)
+
+    # Save the plot to a file or display it
+    if output_path:
+        plt.savefig(output_path, format='png')
+        print(f"Bar graph saved to {output_path}")
+    else:
+        plt.show()
+
+
 if __name__ == "__main__":
     # Replace with your actual token
-    token = "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"
+    token = "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"
     chat_bot = HuggingFaceChat("microsoft/Phi-3-mini-4k-instruct", token=token)
 
-    # File paths
-    prompt_file = "prompts.txt"
-    response_file = "responses.txt"
+    # Input and output file lists
+    input_files = ["review1.txt", "review2.txt", "review3.txt", "review4.txt"]
+    output_files = ["responses1.txt", "responses2.txt", "responses3.txt", "responses4.txt"]
 
-    # Process and save responses
-    chat_bot.read_prompts(prompt_file)
-    chat_bot.generate_responses(max_tokens=200, prompt_limit=3)
-    chat_bot.save_responses(response_file)
+    # Process files
+    chat_bot.process_multiple_files(input_files, output_files, max_tokens=100)
+
+        # Example sentiments
+    sentiments = ["positive", "negative", "neutral", "positive", "positive", "neutral", "negative"]
+
+    # Display the sentiment distribution
+    plot_sentiment_distribution(sentiments)
+
