@@ -102,48 +102,48 @@ class HuggingFaceChat:
 
 def plot_sentiment_distribution(device_sentiments, output_path=None):
     """
-    Create a bar graph showing the distribution of sentiments.
+    Create a grouped bar graph showing the sentiment distribution across devices.
 
     Args:
-        sentiments (list): A list of sentiment labels (e.g., "positive", "negative", "neutral").
+        device_sentiments (dict): A dictionary where keys are device names and values are lists of sentiment labels.
         output_path (str, optional): Path to save the plot. If None, the plot is displayed.
     """
-    #Categories
+    # Sentiment categories
     categories = ["positive", "negative", "neutral"]
 
-    #Get data ready to plot
+    # Prepare data for plotting
     device_labels = list(device_sentiments.keys())
-    sentiment_count = [
-        [Counter(device_sentiments[device]).get(category, 0) for category in categories]
-        for device in device_labels
+    sentiment_counts = [
+        [Counter(device_sentiments[device]).get(category, 0) for device in device_labels]
+        for category in categories
     ]
 
-    #Bar position
-    x = np.arange(len(categories))
+    # Bar positions
+    x = np.arange(len(device_labels))
     bar_width = 0.2
 
-    #Plot the data
-    plt.figure(figsize = (10, 6))
-    for i, counts in enumerate(sentiment_count):
+    # Plot the data
+    plt.figure(figsize=(10, 6))
+    for i, counts in enumerate(sentiment_counts):
         plt.bar(
             x + i * bar_width,
             counts,
-            width = bar_width, 
-            label = device_labels[i],
-            alpha = 0.7,
+            width=bar_width,
+            label=categories[i],  # Sentiment as the legend label
+            alpha=0.7,
         )
 
-    #configure the plot
-    plt.title("Sentiment Distribution by Device", fontsize = 16)
-    plt.xlabel("Sentiments", fontsize = 14)
-    plt.ylabel("Count", fontsize = 14)
-    plt.xticks(x + bar_width * (len(device_labels) - 1) / 2, categories, fontsize = 12)
-    plt.legend(fontsize = 12)
-    plt.grid(axis = "y", linestyle = "--", alpha = 0.7)
+    # Configure the plot
+    plt.title("Sentiment Distribution by Device", fontsize=16)
+    plt.xlabel("Devices", fontsize=14)
+    plt.ylabel("Count", fontsize=14)
+    plt.xticks(x + bar_width, device_labels, fontsize=12)  # X-axis labels are devices
+    plt.legend(title="Sentiments", fontsize=12)
+    plt.grid(axis="y", linestyle="--", alpha=0.7)
 
-    #Save or display the graph
+    # Save or display the graph
     if output_path:
-        plt.savefig(output_path, format = "png")
+        plt.savefig(output_path, format="png")
         print(f"Grouped bar graph saved to {output_path}")
     else:
         plt.show()
@@ -163,10 +163,10 @@ if __name__ == "__main__":
 
     #Device names
     device_sentiments = {
-        "Device 1": ["positive"],
-        "Device 2": ["negative"],
-        "Device 3": ["neutral"],
-        "Device 4": ["positive"]
+        "Apple Watch 9": ["positive", "negative", "positive"],
+        "Apple Watch 10": ["negative"],
+        "Apple Watch 3": ["neutral"],
+        "Apple Watch SE": ["positive"]
     }
 
     #Function call to plot data
