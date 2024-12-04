@@ -12,11 +12,11 @@ positive
 
 Response to Prompt 4:
 I bought my Apple Watch at Best Buy. I looked at various models as the BB Sales Associate carefully and patiently detailed their features. Because I have small wrists, I opted for the 42mm Series 10 (as against the 46mm).
-neutral
+positive
 
 Response to Prompt 5:
 The store did not have the color I wanted in stock, so they offered to ship the item to me free of charge!
-positive
+neutral
 
 Response to Prompt 6:
 My new Apple Watch was delivered the next day!
@@ -32,7 +32,7 @@ positive
 
 Response to Prompt 9:
 I’m so excited to upgrade my watch se to the watch 10 all best buy employees are very helpful I love my experience with this purchase
-neutral
+positive
 
 Response to Prompt 10:
 I absoloutely love it. It feels so light, and much larger! than series 9. A worthy upgrade!
@@ -44,7 +44,7 @@ positive
 
 Response to Prompt 12:
 I upgraded from series 3 to series 10 , there are many differences. I appreciate series 10 speakers and sleep vitals. I also enjoy addition of keyboard instead of scribble in messages. However, the battery drain much faster on series 10 than series 3. I think this is mostly due to the higher functions in the series 10, but if you do not need to watch with all of the different bits and whistles, you could definitely get by with the series 9
-negative
+neutral
 
 Response to Prompt 13:
 Bought 2 apple watch series 10 and traded in 2 apple watch series 9. Both were received by Bestbuy on the same day, but only 1 is processed. The other is tagged as Empty package received. I called customer service 3 times and was told they cannot access info for trade in but I did received their verbal and also email confirmation for my case that as long as Bestbuy received the package that I will get a refund. It has been more than 2 weeks and still nothing. I went to the store and was told by the manager there to NEVER use mail to trade in as she has heard stories of items being stolen by the 3rd party company that processes trade in for Bestbuy. As a Plus member this really made me lose trust with Bestbuy.

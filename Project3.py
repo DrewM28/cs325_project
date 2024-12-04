@@ -6,21 +6,19 @@ from collections import Counter
 import matplotlib.pyplot as plt
 import numpy as np
 
+
+#class to call phi-3, read the prompts, generate a sentiment, and save it to response.txt
 class HuggingFaceChat:
+    #initialization that uses phi-3 and the token
     def __init__(self, model_name, token=None):
-        """
-        Initialize the HuggingFaceChat class with model details and API token.
-        """
         self.model_name = model_name
         self.token = token or os.getenv("HUGGINGFACE_API_TOKEN")
         if not self.token:
             raise ValueError("API token is required. Set it as an environment variable or pass it explicitly.")
         self.client = InferenceClient(self.model_name, token=self.token)
 
+    #reading the prompts from Project2 reviews
     def read_prompts(self, file_path):
-        """
-        Read prompts from a file.
-        """
         try:
             with open(file_path, "r", encoding = "utf-8", errors="ignore") as file:
                 return file.readlines()
@@ -31,11 +29,8 @@ class HuggingFaceChat:
             print(f"Unexpected error reading {file_path}: {e}")
             return []
 
+    #generates a response using phi-3 and returning only positive, negative, or neutral
     def generate_responses(self, prompts, max_tokens=100):
-        """
-        Generate responses for the prompts using the Hugging Face model,
-        ensuring the output is classified as positive, negative, or neutral.
-        """
         if not prompts:
             print("No prompts available to process.")
             return []
@@ -71,10 +66,8 @@ class HuggingFaceChat:
             responses.append(response_text)
         return responses
 
+    #saves the generated responses to a response.txt file
     def save_responses(self, prompts, responses, output_path):
-        """
-        Save the generated responses to a file.
-        """
         try:
             with open(output_path, "w", encoding="utf-8", errors="ignore") as file:
                 for i, (prompt, response) in enumerate(zip(prompts, responses), start=1):
@@ -85,10 +78,8 @@ class HuggingFaceChat:
         except Exception as e:
             print(f"Error saving responses to {output_path}: {e}")
 
+    #This is what processes all 4 review files
     def process_multiple_files(self, input_files, output_files, max_tokens=100):
-        """
-        Process multiple input files and save responses to corresponding output files.
-        """
         if len(input_files) != len(output_files):
             print("Error: Number of input files must match number of output files.")
             return
@@ -100,14 +91,8 @@ class HuggingFaceChat:
             self.save_responses(prompts, responses, output_file)
 
 
+#function to make the graph of positive, negative, or neutral results
 def plot_sentiment_distribution(device_sentiments, output_path=None):
-    """
-    Create a grouped bar graph showing the sentiment distribution across devices.
-
-    Args:
-        device_sentiments (dict): A dictionary where keys are device names and values are lists of sentiment labels.
-        output_path (str, optional): Path to save the plot. If None, the plot is displayed.
-    """
     # Sentiment categories
     categories = ["positive", "negative", "neutral"]
 
@@ -150,9 +135,8 @@ def plot_sentiment_distribution(device_sentiments, output_path=None):
 
 
 if __name__ == "__main__":
-    # Replace with your actual token
-    token = "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"
-    chat_bot = HuggingFaceChat("microsoft/Phi-3-mini-4k-instruct", token=token)
+    token = "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" #token from hugging face
+    chat_bot = HuggingFaceChat("microsoft/Phi-3-mini-4k-instruct", token=token) #this is what tells hugging face to use PHI-3
 
     # Input and output file lists
     input_files = ["review1.txt", "review2.txt", "review3.txt", "review4.txt"]
@@ -163,10 +147,10 @@ if __name__ == "__main__":
 
     #Device names
     device_sentiments = {
-        "Apple Watch 9": ["positive", "negative", "positive"],
-        "Apple Watch 10": ["negative"],
-        "Apple Watch 3": ["neutral"],
-        "Apple Watch SE": ["positive"]
+        "Apple Watch 9": ["positive", "positive", "positive", "neutral", "positive", "positive", "positive", "negative", "positive", "positive", "positive", "positive", "positive", "positive", "positive", "positive", "negative", "positive", "positive", "positive"],
+        "Apple Watch 10": ["positive", "neutral", "positive", "neutral", "positive", "positive", "positive", "positive", "neutral", "positive", "positive", "neutral", "positive", "positive", "negative", "negative", "positive", "positive", "positive", "positive", "positive", "positive", "positive"],
+        "Apple Watch 3": ["positive", "positive", "negative", "positive", "positive", "positive", "positive", "positive", "negative", "positive", "positive", "positive", "positive", "negative", "positive", "positive", "positive", "positive", "negative", "positive", "positive"],
+        "Apple Watch SE": ["neutral", "positive", "positive", "positive", "negative", "positive", "positive", "positive", "positive", "positive", "positive", "positive", "positive", "negative", "positive", "positive", "positive", "positive", "positive", "positive", "positive", "positive", "positive"]
     }
 
     #Function call to plot data

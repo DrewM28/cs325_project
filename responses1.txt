@@ -12,7 +12,7 @@ positive
 
 Response to Prompt 4:
 Absolutely love my watch! It is the most convenient technologically advanced product. From the ability to track your sleep, check your heart rate and countless  calendar and planning your day. Everyone needs a device that sits on the wrist to help them organize our day-to-day task. I’m an ER Nurse and I don’t think I could possibly function at my job without my Apple!
-neutral
+positive
 
 Response to Prompt 5:
 Love this watch! The sport loop is stylish and comfortable and you can easily change band to match outfit.
@@ -28,7 +28,7 @@ positive
 
 Response to Prompt 8:
 My wife hates watches and loves this. Worth the money. She loves the fit
-negative
+neutral
 
 Response to Prompt 9:
 am really enjoying this brand from bestbuy and it working perfectly, Thank you so much for your discount prices because i made this purchase on a discount and am really much more happy wearing it.
@@ -56,7 +56,7 @@ positive
 
 Response to Prompt 15:
 I really like this watch. I haven’t learned all the features on it yet, I fell a couple of weeks ago and it told me I had fallen and ask if I needed 911. I would recommend this watch to everyone!!
-positive
+neutral
 
 Response to Prompt 16:
 Geo ( my associate) was so kind and helpful with setting up my watch. He answered all of my questions
