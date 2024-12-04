@@ -36,4 +36,4 @@ In my test_huggingface_chat.py is my 4 test cases. I installed ```pip install py
 
 
 
-![Sentiment Distribution](test_graph.png)
+![Sentiment Distribution](sentiment_graph.png)
