@@ -1,7 +1,7 @@
 #Test Case 1
 import pytest
 from huggingface_hub import InferenceClient
-from main_script import HuggingFaceChat  # Replace `main_script` with the name of your Python file
+from Project3 import HuggingFaceChat
 
 def test_initialization():
     with pytest.raises(ValueError, match="API token is required"):
@@ -30,21 +30,31 @@ def test_read_prompts(tmp_path):
     assert prompts == []
 
 #Test Case 3
-def test_generate_responses(mocker):
+def test_generate_responses_with_error_handling(mocker):
+    # Mock chat_completion to raise an exception, simulating an error during the API call
     mocker.patch.object(
-        InferenceClient, "chat_completion",
-        return_value=[{"choices": [{"delta": {"content": "positive"}}]}]
+        InferenceClient,
+        "chat_completion",
+        side_effect=Exception("API call failed")
     )
 
+    # Initialize the HuggingFaceChat class
     chat_bot = HuggingFaceChat("model_name", token="dummy_token")
+    
+    # Define prompts
     prompts = ["This is a positive review.", "This is a negative review."]
+    
+    # Call the generate_responses method
     responses = chat_bot.generate_responses(prompts)
     
-    assert len(responses) == 2
-    assert responses == ["positive", "positive"]
+    # Assertions
+    assert len(responses) == 2  # Expect 2 responses for 2 prompts
+    assert responses == ["neutral", "neutral"]  # Error should default to "neutral" for both prompts
+
 
 #Test Case 4
 import matplotlib.pyplot as plt
+from Project3 import plot_sentiment_distribution
 
 def test_plot_sentiment_distribution(tmp_path):
     device_sentiments = {

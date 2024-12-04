@@ -1,6 +1,6 @@
 CS 325 Project 3: A combination of Project 1 and Project 2 that uses the review files from BestBuy that I scraped in Project 2 and calls PHI-3 that I did in Project 1.
 I will start off by giving steps on how to use this program.
-1. First you will need to install ```pip install huggingface_hub``` and ```pip install matplotlib```. These will allow you to call PHI-3 through hugging face using API and also graph the sentiments of PHI-3 response. Another install you will need is ```pip install numpy```. This helps the bar graph define the x positions of the bars.
+1. First you will need to install ```pip install huggingface_hub```, ```pip install matplotlib```, and ``` pip install pytest```. These will allow you to call PHI-3 through hugging face using API and also graph the sentiments of PHI-3 response. This also uses pytest to test the functions and class. Another install you will need is ```pip install numpy```. This helps the bar graph define the x positions of the bars.
 2. Once these are all installed in the environment then we can look at the program.
 3. Once the program is up make sure you have activated the environment in the terminal ```conda activate cs325``` then you are good to run the program.
 
