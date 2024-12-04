@@ -16,7 +16,7 @@ positive
 
 Response to Prompt 5:
 Love this watch! The sport loop is stylish and comfortable and you can easily change band to match outfit.
-positive
+neutral
 
 Response to Prompt 6:
 This watch has many great functions many of which I still have to discover,  I love that it tracks my sleep, has a heart rate monitor, tracks steps, ect.  It is stylish and comfortable to wear.  I am extremely happy with my purchase.
@@ -28,7 +28,7 @@ positive
 
 Response to Prompt 8:
 My wife hates watches and loves this. Worth the money. She loves the fit
-neutral
+positive
 
 Response to Prompt 9:
 am really enjoying this brand from bestbuy and it working perfectly, Thank you so much for your discount prices because i made this purchase on a discount and am really much more happy wearing it.
@@ -56,7 +56,7 @@ positive
 
 Response to Prompt 15:
 I really like this watch. I haven’t learned all the features on it yet, I fell a couple of weeks ago and it told me I had fallen and ask if I needed 911. I would recommend this watch to everyone!!
-neutral
+positive
 
 Response to Prompt 16:
 Geo ( my associate) was so kind and helpful with setting up my watch. He answered all of my questions
