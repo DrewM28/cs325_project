@@ -154,4 +154,4 @@ if __name__ == "__main__":
     }
 
     #Function call to plot data
-    plot_sentiment_distribution(device_sentiments, output_path="test_graph.png")
+    plot_sentiment_distribution(device_sentiments, output_path="sentiment_graph.png")

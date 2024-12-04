@@ -1,6 +1,6 @@
 CS 325 Project 3: A combination of Project 1 and Project 2 that uses the review files from BestBuy that I scraped in Project 2 and calls PHI-3 that I did in Project 1.
 I will start off by giving steps on how to use this program.
-1. First you will need to install ```pip install huggingface_hub```, ```pip install matplotlib```, and ``` pip install pytest```. These will allow you to call PHI-3 through hugging face using API and also graph the sentiments of PHI-3 response. This also uses pytest to test the functions and class. Another install you will need is ```pip install numpy```. This helps the bar graph define the x positions of the bars.
+1. First you will need to install ```pip install huggingface_hub```, ```pip install matplotlib```. These will allow you to call PHI-3 through hugging face using API and also graph the sentiments of PHI-3 response. This also uses pytest to test the functions and class. Another install you will need is ```pip install numpy```. This helps the bar graph define the x positions of the bars.
 2. Once these are all installed in the environment then we can look at the program.
 3. Once the program is up make sure you have activated the environment in the terminal ```conda activate cs325``` then you are good to run the program.
 
@@ -23,6 +23,13 @@ Now the last part is main. ```if __name__ == "__main__":```. This is where the t
 This is not the full list of sentiments but just an example.
 
 Finally we call the graph function, ```plot_sentiment_distribution(device_sentiments, output_path="test_graph.png")```. This just saves the graph to make sure it looks right before moving it to the README.md file.
+
+Now for the test cases.
+In my test_huggingface_chat.py is my 4 test cases. I installed ```pip install pytest``` and ```pip install pytest-mock```.
+1. My first test case is ```def test_initialization():``` this test makes sure that Huggingface is getting initialized to call phi-3.
+2. My second test case is ```test_read_prompts(tmp_path)```. This test case makes sure that the prompts are getting read from the file.
+3. My third test case is ```test_generate_responses_with_error_handling(mocker):```. This test cause generates the responses and raises an exception to simulate an error during the API call and makes sure the response defaults to neutral.
+4. My final test case is ```test_plot_sentiment_distribution(tmp_path):```. This test case makes sure the plot from my Project3 file is working correctly.
 
 
 
