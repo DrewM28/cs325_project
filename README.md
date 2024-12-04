@@ -29,4 +29,4 @@ Finally we call the graph function, ```plot_sentiment_distribution(device_sentim
 
 
 
-
+![Sentiment Distribution](test_graph.png)
